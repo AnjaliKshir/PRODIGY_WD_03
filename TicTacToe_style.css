@@ -1,0 +1,169 @@
+*, *::after, *::before{
+    box-sizing: border-box;
+    /* overflow: hidden; */
+}
+
+:root{
+    --box-size: 100px;
+    --mark-size: calc(var(--box-size) * 0.9)      /*mark-size = 90% of the box-size, for the O's and X's to bea lil smaller than the black box*/
+}
+
+body{
+    margin: 0;
+    /* background-image: linear-gradient(orange,rgb(252, 102, 127)); */
+    background-image: linear-gradient(#000000);
+    background-color: black;
+}
+
+.playground{
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    grid-template-columns: repeat(3, auto); 
+}   
+
+.box{
+    position: relative; 
+    height: var(--box-size);
+    width: var(--box-size);
+    border: 1px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.box:nth-child(1),
+.box:nth-child(2),
+.box:nth-child(3){
+    border-top: none;
+}
+
+.box:nth-child(7),
+.box:nth-child(8),
+.box:nth-child(9){
+    border-bottom: none;
+}
+
+.box:nth-child(3n+1){        
+    /* 1,4,7 */      
+    border-left: none;
+}
+.box:nth-child(3n+3){
+    /* 3,6,9 */
+    border-right: none;
+}
+
+.box.x,
+.box.o{
+    cursor: not-allowed;
+}
+
+/* -----------------------------X----------------------------- */
+
+.box.x::before,
+.box.x::after,
+.playground.x .box:not(.x):not(.o):hover::before,
+.playground.x .box:not(.x):not(.o):hover::after{
+    position: absolute; 
+    content: '';
+    width: calc(var(--mark-size)*0.15);
+    height: var(--mark-size);
+    background-color: #8BE8E5;
+}
+
+.box.x::before,
+.playground.x .box:not(.x):not(.o):hover::before{
+    transform: rotate(45deg);
+}
+
+.box.x::after,
+.playground.x .box:not(.x):not(.o):hover::after{
+    transform: rotate(-45deg);
+} 
+
+.playground.x .box:not(.x):not(.o):hover::before,
+.playground.x .box:not(.x):not(.o):hover::after{
+    /* background-color: lightgrey; */
+    /* background-color: #FFA732; */
+    background-color: #b9f8f7;
+}
+
+/* -----------------------------O----------------------------- */
+
+.box.o::before,
+.box.o::after,
+.playground.o .box:not(.x):not(.o):hover::before,
+.playground.o .box:not(.x):not(.o):hover::after{
+    position: absolute;  
+    content: '';
+    border-radius: 50%;
+}
+
+.box.o::before,
+.playground.o .box:not(.x):not(.o):hover::before{
+    width: var(--mark-size);
+    height: var(--mark-size);
+    /* background-color: #d46f4d; */
+    background-color: #A084E8;
+}
+
+.box.o::after,
+.playground.o .box:not(.x):not(.o):hover::after{
+    width: calc(var(--mark-size)*0.7);
+    height: calc(var(--mark-size)*0.7);
+    background-color: black;
+} 
+
+.playground.o .box:not(.x):not(.o):hover::before
+{
+    /* background-color: lightgrey; */
+    /* background-color: #FFA732; */
+    background-color: #c2aef4;
+}
+
+
+/* -----------------------------result----------------------------- */
+
+.result{
+    display: none;
+    position: fixed;
+    top:0;
+    left:0;
+    right: 0;
+    bottom: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.9);
+    font-family: 'Moirai One', system-ui;
+    /* font-family: 'Concert One', sans-serif; */
+    font-weight: bolder;
+    color: #f4f813; 
+    font-size: 5.6rem;
+}
+
+#restart_btn{
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.8rem;
+    margin-top: 20px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.8);
+    border:none;
+    border-radius: 20px;
+    
+}
+
+#restart_btn:hover{
+    box-shadow: 0px 0px 14px #f4f813;
+    transition: 0.5s;
+}
+
+.result.show{
+    display:flex;
+}
